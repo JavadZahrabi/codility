@@ -1,8 +1,4 @@
 
-from tkinter import N
-
-
-
 
 MAXINT = 2147483647
 
@@ -18,7 +14,32 @@ def solution(N):
         raise ValueError("Input must be a positive integer less than 2,147,483,647")
     
     binary_string = str(bin(N))[2:]
+    max_count = None
+    this_count = 0
+    was_zero = None
+
+    for bit in binary_string:
+        is_zero = bit == '0'
+
+        if bool(was_zero) != bool(is_zero):
+            if max_count is None:
+                max_count = 0
+            elif this_count > max_count:
+                max_count = this_count
+            this_count = 1
+        else:
+            this_count += 1
+
+        was_zero = is_zero
+    
+    if max_count is not None:
+        return max_count
+    else:
+        return 0
 
 
-N = input ("Enter a positive integer number:")
-solution(N)
+
+
+N = int(input ("Enter a positive integer number:"))
+test = solution(N)
+print(test)
